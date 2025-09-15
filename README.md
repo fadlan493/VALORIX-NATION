@@ -21,14 +21,14 @@
   <script>
     // Konfigurasi Firebase kamu
     const firebaseConfig = {
-      apiKey: "AIzaSyDKjZuHMc7OFWxJNI3ghSK0hupD2bXtYDg",
-      authDomain: "pantek-fdfda.firebaseapp.com",
-      databaseURL: "https://pantek-fdfda-default-rtdb.firebaseio.com",
-      projectId: "pantek-fdfda",
-      storageBucket: "pantek-fdfda.appspot.com",
-      messagingSenderId: "250749381924",
+      apiKey:"AIzaSyDKjZuHMc7OFWxJNI3ghSK0hupD2bXtYDg",
+      authDomain:"pantek-fdfda.firebaseapp.com",
+      databaseURL:"https://pantek-fdfda-default-rtdb.asia-southeast1.firebasedatabase.app",
+      projectId:"pantek-fdfda",
+      storageBucket:"pantek-fdfda.appspot.com",
+      messagingSenderId:"250749381924",
       appId: "1:250749381924:web:ad5e5210626d1c271fd7b1",
-      measurementId: "G-5VBKNGTDX6"
+      measurementId:"G-5VBKNGTDX6"
     };
 
     // Inisialisasi Firebase
@@ -51,8 +51,8 @@
     messagesRef.on("child_added", (snapshot) => {
       const msg = snapshot.val().text;
       const msgEl = document.createElement("div");
-      msgEl.className = "msg";
-      msgEl.innerText = msg;
+      msgEl.className ="msg";
+      msgEl.innerText =msg;
       document.getElementById("messages").appendChild(msgEl);
       document.getElementById("messages").scrollTop = document.getElementById("messages").scrollHeight;
     });
