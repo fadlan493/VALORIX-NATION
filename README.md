@@ -225,11 +225,13 @@
 </head>
 <body>
 
+  <!-- Header fixed dengan background gambar lo -->
   <div class="header" id="header">
     <h1>VALORIX NATION</h1>
     <p class="tagline">Server Minecraft Indonesia - Survival • Economy • Fun • Community</p>
   </div>
 
+  <!-- Status pemain online -->
   <div class="player-status">
     <div>Pemain Online Saat Ini:</div>
     <div id="players">Memuat...</div>
@@ -270,6 +272,7 @@
       </div>
     </div>
 
+    <!-- Halaman Rank -->
     <div id="rank" class="content">
       <h1 style="text-align:center; color:#23ff4b; margin-bottom:20px;">RANK VALORIX NATION</h1>
       <p style="text-align:center; color:#aaffaa; margin-bottom:50px; font-size:1.3rem;">
@@ -371,6 +374,7 @@
       <button class="back-btn" onclick="backToMenu()">Kembali ke Menu Utama</button>
     </div>
 
+    <!-- Halaman Rules -->
     <div id="rules" class="content">
       <h1 style="text-align:center; color:#23ff4b;">SERVER RULES</h1>
       <p style="text-align:center; color:#aaffaa; margin-bottom:60px;">Patuhi aturan ini biar akun aman dan server nyaman!</p>
@@ -409,6 +413,7 @@
       <button class="back-btn" onclick="backToMenu()">Kembali ke Menu Utama</button>
     </div>
 
+    <!-- Konten Staff -->
     <div id="staff" class="content">
       <h1 style="text-align:center; color:#23ff4b;">STAFF TEAM</h1>
       <p style="text-align:center; color:#aaffaa; margin:40px 0 60px;">Tim yang menjaga server tetap aman & seru!</p>
@@ -426,6 +431,7 @@
       <button class="back-btn" onclick="backToMenu()">Kembali ke Menu Utama</button>
     </div>
 
+    <!-- Konten Changelog -->
     <div id="changelog" class="content">
       <h1 style="text-align:center; color:#23ff4b;">CHANGELOG</h1>
       <p style="text-align:center; color:#aaffaa; margin:40px 0 60px;">Update terbaru server Valorix Nation</p>
@@ -443,7 +449,7 @@
   </div>
 
   <footer>
-    © 2026 Valorix Nation • IP: host-8.vy-node.my.id:19174 • WhatsApp: <a href="https://chat.whatsapp.com/Fzh6XsvTnWQ3RvrahXlVV5" style="color:var(--primary);">Gabung Grup</a>
+    © 2026 Valorix Nation • IP: valorix-nation.my.id:19132 • WhatsApp: <a href="https://chat.whatsapp.com/Fzh6XsvTnWQ3RvrahXlVV5" style="color:var(--primary);">Gabung Grup</a>
   </footer>
 
   <script>
@@ -519,8 +525,8 @@
       });
     });
 
-    // FIX STATUS PEMAIN ONLINE (yang stuck "Memuat..." mulu)
-    const serverIP = "host-8.vy-node.my.id:19174";
+    // Update jumlah pemain online (sudah diperbaiki biar ga stuck "Memuat...")
+    const serverIP = "valorix-nation.my.id:19132";
     const apiUrl = `https://api.mcsrvstat.us/3/${serverIP}`;
 
     async function updatePlayers() {
@@ -528,7 +534,6 @@
       playersEl.innerHTML = "Memuat...";
 
       try {
-        // Tambah timeout biar ga stuck selamanya
         const controller = new AbortController();
         const timeoutId = setTimeout(() => controller.abort(), 10000);
 
@@ -551,7 +556,7 @@
     }
 
     updatePlayers();
-    setInterval(updatePlayers, 8000); // Update tiap 8 detik, cukup cepat tapi stabil
+    setInterval(updatePlayers, 8000);
   </script>
 </body>
 </html>
