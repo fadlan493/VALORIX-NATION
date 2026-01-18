@@ -29,7 +29,6 @@
       min-height: 100vh;
       overflow-x: hidden;
     }
-    /* Header fixed dengan gambar background dari lo */
     .header {
       position: fixed;
       top: 0;
@@ -59,8 +58,21 @@
       margin-top: 6px;
       text-shadow: 0 0 15px rgba(35,255,75,0.5);
     }
+    .player-status {
+      text-align: center;
+      margin: 140px 20px 40px;
+      font-size: 1.5rem;
+      color: var(--text-light);
+    }
+    #players {
+      font-size: 4rem;
+      font-weight: bold;
+      color: var(--primary);
+      text-shadow: 0 0 30px var(--primary);
+      margin: 10px 0;
+    }
     .main-content {
-      padding-top: 120px; /* Ruang header fixed */
+      padding-top: 120px;
       min-height: calc(100vh - 120px);
     }
     .menu-container, .content {
@@ -160,46 +172,6 @@
       transform: translateY(-6px) scale(1.05);
       box-shadow: 0 15px 40px rgba(35,255,75,0.7);
     }
-    .qris-container {
-      text-align: center;
-      margin: 50px 0;
-    }
-    .qris-img {
-      max-width: 380px;
-      border-radius: 18px;
-      box-shadow: 0 12px 35px rgba(0,0,0,0.7);
-      border: 4px solid rgba(35,255,75,0.3);
-    }
-    .rules-list {
-      background: rgba(20, 40, 20, 0.6);
-      border: 1px solid rgba(35,255,75,0.3);
-      border-radius: 18px;
-      padding: 40px;
-      margin: 40px 0;
-    }
-    .rules-list h3 {
-      color: var(--primary);
-      margin: 30px 0 15px;
-      font-size: 1.8rem;
-    }
-    .rules-list ul {
-      list-style: none;
-      padding-left: 0;
-    }
-    .rules-list li {
-      margin: 18px 0;
-      padding-left: 35px;
-      position: relative;
-      font-size: 1.1rem;
-      color: var(--text-light);
-    }
-    .rules-list li::before {
-      content: "•";
-      position: absolute;
-      left: 0;
-      color: var(--primary);
-      font-size: 2.2rem;
-    }
     footer {
       text-align: center;
       padding: 60px 20px;
@@ -253,10 +225,14 @@
 </head>
 <body>
 
-  <!-- Header fixed dengan background gambar lo -->
   <div class="header" id="header">
     <h1>VALORIX NATION</h1>
     <p class="tagline">Server Minecraft Indonesia - Survival • Economy • Fun • Community</p>
+  </div>
+
+  <div class="player-status">
+    <div>Pemain Online Saat Ini:</div>
+    <div id="players">Memuat...</div>
   </div>
 
   <div class="main-content">
@@ -294,7 +270,6 @@
       </div>
     </div>
 
-    <!-- Halaman Rank -->
     <div id="rank" class="content">
       <h1 style="text-align:center; color:#23ff4b; margin-bottom:20px;">RANK VALORIX NATION</h1>
       <p style="text-align:center; color:#aaffaa; margin-bottom:50px; font-size:1.3rem;">
@@ -396,7 +371,6 @@
       <button class="back-btn" onclick="backToMenu()">Kembali ke Menu Utama</button>
     </div>
 
-    <!-- Konten Rules -->
     <div id="rules" class="content">
       <h1 style="text-align:center; color:#23ff4b;">SERVER RULES</h1>
       <p style="text-align:center; color:#aaffaa; margin-bottom:60px;">Patuhi aturan ini biar akun aman dan server nyaman!</p>
@@ -435,7 +409,6 @@
       <button class="back-btn" onclick="backToMenu()">Kembali ke Menu Utama</button>
     </div>
 
-    <!-- Konten Staff -->
     <div id="staff" class="content">
       <h1 style="text-align:center; color:#23ff4b;">STAFF TEAM</h1>
       <p style="text-align:center; color:#aaffaa; margin:40px 0 60px;">Tim yang menjaga server tetap aman & seru!</p>
@@ -453,7 +426,6 @@
       <button class="back-btn" onclick="backToMenu()">Kembali ke Menu Utama</button>
     </div>
 
-    <!-- Konten Changelog -->
     <div id="changelog" class="content">
       <h1 style="text-align:center; color:#23ff4b;">CHANGELOG</h1>
       <p style="text-align:center; color:#aaffaa; margin:40px 0 60px;">Update terbaru server Valorix Nation</p>
@@ -471,7 +443,7 @@
   </div>
 
   <footer>
-    © 2026 Valorix Nation • IP: play.valorix.net • WhatsApp: <a href="https://chat.whatsapp.com/Fzh6XsvTnWQ3RvrahXlVV5" style="color:var(--primary);">Gabung Grup</a>
+    © 2026 Valorix Nation • IP: host-8.vy-node.my.id:19174 • WhatsApp: <a href="https://chat.whatsapp.com/Fzh6XsvTnWQ3RvrahXlVV5" style="color:var(--primary);">Gabung Grup</a>
   </footer>
 
   <script>
@@ -501,7 +473,6 @@
 
     document.querySelectorAll('.back-btn').forEach(btn => btn.addEventListener('click', backToMenu));
 
-    // Scroll reveal rank card
     const rankCards = document.querySelectorAll('.rank-card');
     const rankObserver = new IntersectionObserver((entries) => {
       entries.forEach(entry => {
@@ -513,7 +484,6 @@
 
     rankCards.forEach(card => rankObserver.observe(card));
 
-    // Beli rank - WA polos
     document.querySelectorAll('.beli-btn').forEach(btn => {
       btn.addEventListener('click', function(e) {
         const rank = this.getAttribute('data-rank');
@@ -548,6 +518,40 @@
         setTimeout(() => ripple.remove(), 900);
       });
     });
+
+    // FIX STATUS PEMAIN ONLINE (yang stuck "Memuat..." mulu)
+    const serverIP = "host-8.vy-node.my.id:19174";
+    const apiUrl = `https://api.mcsrvstat.us/3/${serverIP}`;
+
+    async function updatePlayers() {
+      const playersEl = document.getElementById("players");
+      playersEl.innerHTML = "Memuat...";
+
+      try {
+        // Tambah timeout biar ga stuck selamanya
+        const controller = new AbortController();
+        const timeoutId = setTimeout(() => controller.abort(), 10000);
+
+        const response = await fetch(apiUrl, { signal: controller.signal });
+        clearTimeout(timeoutId);
+
+        const data = await response.json();
+
+        if (data.online) {
+          playersEl.innerHTML = `${data.players.online} / ${data.players.max}`;
+          playersEl.style.color = "#23ff4b";
+        } else {
+          playersEl.innerHTML = "Server Offline";
+          playersEl.style.color = "#ff4b23";
+        }
+      } catch (error) {
+        playersEl.innerHTML = "Server Offline / Gagal Cek";
+        playersEl.style.color = "#ff4b23";
+      }
+    }
+
+    updatePlayers();
+    setInterval(updatePlayers, 8000); // Update tiap 8 detik, cukup cepat tapi stabil
   </script>
 </body>
 </html>
